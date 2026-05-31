@@ -1,0 +1,11 @@
+.git
+.venv
+clips
+*.zip
+*.mp4
+*.mov
+data/store.db*
+__pycache__
+.pytest_cache
+.coverage
+

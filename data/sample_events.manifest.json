@@ -1,0 +1,444 @@
+{
+  "clip_count": 5,
+  "clips": [
+    {
+      "camera_id": "CAM_MAIN_01",
+      "created_at": "2026-04-15T13:46:50+00:00",
+      "duration_seconds": 139.906438,
+      "fps": 29.97002997002997,
+      "height": 1080,
+      "path": "../../resources/cctv/CCTV Footage/CAM 1.mp4",
+      "role": "main_floor",
+      "width": 1920,
+      "zones": [
+        "GOOD_VIBES",
+        "DERMDOC",
+        "MAKEUP_UNIT"
+      ]
+    },
+    {
+      "camera_id": "CAM_MAIN_02",
+      "created_at": "2026-04-15T13:50:24+00:00",
+      "duration_seconds": 125.9258,
+      "fps": 29.97002997002997,
+      "height": 1080,
+      "path": "../../resources/cctv/CCTV Footage/CAM 2.mp4",
+      "role": "main_floor",
+      "width": 1920,
+      "zones": [
+        "LAKME",
+        "FACES_CANADA",
+        "MAYBELLINE"
+      ]
+    },
+    {
+      "camera_id": "CAM_ENTRY_01",
+      "created_at": "2026-04-15T13:54:27+00:00",
+      "duration_seconds": 148.014542,
+      "fps": 29.97002997002997,
+      "height": 1080,
+      "path": "../../resources/cctv/CCTV Footage/CAM 3.mp4",
+      "role": "entry",
+      "width": 1920,
+      "zones": [
+        "ENTRY"
+      ]
+    },
+    {
+      "camera_id": "CAM_STAFF_01",
+      "created_at": "2026-04-10T14:39:45+00:00",
+      "duration_seconds": 145.988,
+      "fps": 25.0,
+      "height": 1080,
+      "path": "../../resources/cctv/CCTV Footage/CAM 4.mp4",
+      "role": "staff_backroom",
+      "width": 1920,
+      "zones": [
+        "STOCK_ROOM"
+      ]
+    },
+    {
+      "camera_id": "CAM_BILLING_01",
+      "created_at": "2026-04-10T14:39:48+00:00",
+      "duration_seconds": 138.703,
+      "fps": 25.0,
+      "height": 1080,
+      "path": "../../resources/cctv/CCTV Footage/CAM 5.mp4",
+      "role": "billing",
+      "width": 1920,
+      "zones": [
+        "CASH_COUNTER"
+      ]
+    }
+  ],
+  "event_count": 152,
+  "store_id": "ST1008",
+  "transaction_count": 24,
+  "video_samples": {
+    "../../resources/cctv/CCTV Footage/CAM 1.mp4": [
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 0
+      },
+      {
+        "avg_confidence": 0.432,
+        "count": 1,
+        "second": 10
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 20
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 30
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 40
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 50
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 60
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 70
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 80
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 90
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 100
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 110
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 120
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 130
+      }
+    ],
+    "../../resources/cctv/CCTV Footage/CAM 2.mp4": [
+      {
+        "avg_confidence": 0.395,
+        "count": 1,
+        "second": 0
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 10
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 20
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 30
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 40
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 50
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 60
+      },
+      {
+        "avg_confidence": 0.971,
+        "count": 1,
+        "second": 70
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 80
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 90
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 100
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 110
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 120
+      }
+    ],
+    "../../resources/cctv/CCTV Footage/CAM 3.mp4": [
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 0
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 10
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 20
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 30
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 40
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 50
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 60
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 70
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 80
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 90
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 100
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 110
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 120
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 130
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 140
+      }
+    ],
+    "../../resources/cctv/CCTV Footage/CAM 4.mp4": [
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 0
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 10
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 20
+      },
+      {
+        "avg_confidence": 0.253,
+        "count": 1,
+        "second": 30
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 40
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 50
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 60
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 70
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 80
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 90
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 100
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 110
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 120
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 130
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 140
+      }
+    ],
+    "../../resources/cctv/CCTV Footage/CAM 5.mp4": [
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 0
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 10
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 20
+      },
+      {
+        "avg_confidence": 1.046,
+        "count": 1,
+        "second": 30
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 40
+      },
+      {
+        "avg_confidence": 0.797,
+        "count": 1,
+        "second": 50
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 60
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 70
+      },
+      {
+        "avg_confidence": 0.95,
+        "count": 1,
+        "second": 80
+      },
+      {
+        "avg_confidence": 0.975,
+        "count": 1,
+        "second": 90
+      },
+      {
+        "avg_confidence": 0.705,
+        "count": 1,
+        "second": 100
+      },
+      {
+        "avg_confidence": 0.977,
+        "count": 1,
+        "second": 110
+      },
+      {
+        "avg_confidence": 0.847,
+        "count": 1,
+        "second": 120
+      },
+      {
+        "avg_confidence": 0.35,
+        "count": 0,
+        "second": 130
+      }
+    ]
+  }
+}

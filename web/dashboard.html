@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Apex Store Intelligence</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f7f4;
+        --panel: #ffffff;
+        --ink: #171717;
+        --muted: #667085;
+        --line: #d9ded8;
+        --green: #157f5b;
+        --blue: #2764c5;
+        --red: #b42318;
+        --amber: #b7791f;
+        --tile: #edf2ee;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        letter-spacing: 0;
+      }
+      header {
+        border-bottom: 1px solid var(--line);
+        background: #ffffff;
+      }
+      .bar {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      h1 {
+        font-size: 22px;
+        line-height: 1.2;
+        margin: 0;
+        font-weight: 720;
+      }
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--green);
+      }
+      main {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 22px 20px 34px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .metric,
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+      .metric {
+        padding: 16px;
+        min-height: 108px;
+      }
+      .label {
+        color: var(--muted);
+        font-size: 12px;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      .value {
+        font-size: 30px;
+        line-height: 1.15;
+        font-weight: 760;
+        margin-top: 10px;
+      }
+      .sub {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 4px;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+        gap: 12px;
+        margin-top: 12px;
+      }
+      .panel {
+        padding: 16px;
+        min-height: 240px;
+      }
+      h2 {
+        margin: 0 0 14px;
+        font-size: 16px;
+      }
+      .funnel {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .stage {
+        border: 1px solid var(--line);
+        background: #fbfcfa;
+        border-radius: 6px;
+        padding: 12px;
+        min-height: 92px;
+      }
+      .stage strong {
+        display: block;
+        font-size: 24px;
+      }
+      .heatmap {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .zone {
+        min-height: 72px;
+        border-radius: 6px;
+        padding: 8px;
+        border: 1px solid rgba(23, 23, 23, 0.08);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: var(--tile);
+      }
+      .zone-name {
+        font-size: 11px;
+        font-weight: 720;
+        overflow-wrap: anywhere;
+      }
+      .zone-score {
+        font-size: 18px;
+        font-weight: 760;
+      }
+      .anomaly {
+        border-left: 4px solid var(--amber);
+        padding: 10px 12px;
+        background: #fffaf0;
+        margin-bottom: 10px;
+        border-radius: 4px;
+      }
+      .anomaly.critical {
+        border-color: var(--red);
+        background: #fff4f2;
+      }
+      .anomaly.info {
+        border-color: var(--blue);
+        background: #f3f7ff;
+      }
+      .mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+      @media (max-width: 840px) {
+        .grid,
+        .layout,
+        .funnel {
+          grid-template-columns: 1fr;
+        }
+        .heatmap {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="bar">
+        <h1>Apex Store Intelligence</h1>
+        <div class="status"><span class="dot" id="status-dot"></span><span id="health">Connecting</span></div>
+      </div>
+    </header>
+    <main>
+      <section class="grid">
+        <div class="metric">
+          <div class="label">Visitors</div>
+          <div class="value" id="visitors">0</div>
+          <div class="sub">non-staff sessions</div>
+        </div>
+        <div class="metric">
+          <div class="label">Conversion</div>
+          <div class="value" id="conversion">0%</div>
+          <div class="sub">POS correlated</div>
+        </div>
+        <div class="metric">
+          <div class="label">Queue Depth</div>
+          <div class="value" id="queue">0</div>
+          <div class="sub">latest billing signal</div>
+        </div>
+        <div class="metric">
+          <div class="label">Abandonment</div>
+          <div class="value" id="abandonment">0%</div>
+          <div class="sub">billing queue exits</div>
+        </div>
+      </section>
+      <section class="layout">
+        <div class="panel">
+          <h2>Funnel</h2>
+          <div class="funnel" id="funnel"></div>
+        </div>
+        <div class="panel">
+          <h2>Anomalies</h2>
+          <div id="anomalies"></div>
+        </div>
+      </section>
+      <section class="panel" style="margin-top: 12px">
+        <h2>Zone Heatmap</h2>
+        <div class="heatmap" id="heatmap"></div>
+      </section>
+    </main>
+    <script>
+      const STORE_ID = "ST1008";
+      const fallback = {
+        tick: 0,
+        metrics: { unique_visitors: 31, conversion_rate: 0.64, current_queue_depth: 3, billing_abandonment_rate: 0.12 },
+        funnel: { stages: { entry: 31, zone_visit: 30, billing_queue: 23, purchase: 20 } },
+        heatmap: {
+          zones: [
+            ["GOOD_VIBES", 94],
+            ["DERMDOC", 78],
+            ["MAYBELLINE", 70],
+            ["LAKME", 64],
+            ["FACES_CANADA", 54],
+            ["ACCESSORIES", 38],
+            ["STREAX", 22],
+            ["PMU", 18]
+          ].map(([zone_id, score]) => ({ zone_id, score, visits: Math.round(score / 8), avg_dwell_ms: score * 620 }))
+        },
+        anomalies: { anomalies: [{ type: "BILLING_QUEUE_SPIKE", severity: "WARN", suggested_action: "Open another billing counter until queue depth normalises." }] }
+      };
+
+      async function getJson(path) {
+        const response = await fetch(path, { cache: "no-store" });
+        if (!response.ok) throw new Error(path);
+        return response.json();
+      }
+
+      function fallbackData() {
+        fallback.tick += 1;
+        const queue = 2 + (fallback.tick % 5);
+        return {
+          metrics: { ...fallback.metrics, current_queue_depth: queue, unique_visitors: fallback.metrics.unique_visitors + Math.floor(fallback.tick / 3) },
+          funnel: fallback.funnel,
+          heatmap: fallback.heatmap,
+          anomalies: queue >= 5 ? fallback.anomalies : { anomalies: [] },
+          health: { status: "DEMO" }
+        };
+      }
+
+      async function refresh() {
+        let data;
+        try {
+          const [metrics, funnel, heatmap, anomalies, health] = await Promise.all([
+            getJson(`/stores/${STORE_ID}/metrics`),
+            getJson(`/stores/${STORE_ID}/funnel`),
+            getJson(`/stores/${STORE_ID}/heatmap`),
+            getJson(`/stores/${STORE_ID}/anomalies`),
+            getJson("/health")
+          ]);
+          data = { metrics, funnel, heatmap, anomalies, health };
+        } catch {
+          data = fallbackData();
+        }
+        render(data);
+      }
+
+      function render({ metrics, funnel, heatmap, anomalies, health }) {
+        document.getElementById("visitors").textContent = metrics.unique_visitors ?? 0;
+        document.getElementById("conversion").textContent = `${Math.round((metrics.conversion_rate || 0) * 100)}%`;
+        document.getElementById("queue").textContent = metrics.current_queue_depth ?? 0;
+        document.getElementById("abandonment").textContent = `${Math.round((metrics.billing_abandonment_rate || 0) * 100)}%`;
+        document.getElementById("health").textContent = health.status || "OK";
+        document.getElementById("status-dot").style.background = health.status === "DEGRADED" ? "var(--amber)" : "var(--green)";
+        document.getElementById("funnel").innerHTML = Object.entries(funnel.stages || {})
+          .map(([name, value]) => `<div class="stage"><span class="label">${name.replace("_", " ")}</span><strong>${value}</strong></div>`)
+          .join("");
+        document.getElementById("heatmap").innerHTML = (heatmap.zones || [])
+          .slice(0, 18)
+          .map((zone) => {
+            const alpha = Math.max(0.12, Math.min(0.85, (zone.score || 0) / 120));
+            return `<div class="zone" style="background: rgba(21, 127, 91, ${alpha})"><div class="zone-name">${zone.zone_id}</div><div class="zone-score">${Math.round(zone.score || 0)}</div></div>`;
+          })
+          .join("");
+        const anomalyRows = anomalies.anomalies || [];
+        document.getElementById("anomalies").innerHTML = anomalyRows.length
+          ? anomalyRows.map((item) => `<div class="anomaly ${(item.severity || "").toLowerCase()}"><strong class="mono">${item.type}</strong><div>${item.suggested_action}</div></div>`).join("")
+          : `<div class="sub">No active anomalies</div>`;
+      }
+
+      refresh();
+      setInterval(refresh, 2500);
+    </script>
+  </body>
+</html>
+

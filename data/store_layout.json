@@ -1,0 +1,70 @@
+{
+  "stores": {
+    "ST1008": {
+      "display_name": "Brigade Bangalore",
+      "aliases": ["STORE_BLR_002", "Brigade_Bangalore"],
+      "timezone": "Asia/Kolkata",
+      "open_hours": {
+        "start": "10:00",
+        "end": "22:00"
+      },
+      "cameras": [
+        {
+          "camera_id": "CAM_ENTRY_01",
+          "source_name": "CAM 3.mp4",
+          "role": "entry_exit_threshold",
+          "covered_zones": ["ENTRY"]
+        },
+        {
+          "camera_id": "CAM_MAIN_01",
+          "source_name": "CAM 1.mp4",
+          "role": "main_floor",
+          "covered_zones": ["GOOD_VIBES", "DERMDOC", "MAKEUP_UNIT", "AQUALOGICA"]
+        },
+        {
+          "camera_id": "CAM_MAIN_02",
+          "source_name": "CAM 2.mp4",
+          "role": "main_floor",
+          "covered_zones": ["MAYBELLINE", "FACES_CANADA", "LAKME", "COLORBAR_SUGAR"]
+        },
+        {
+          "camera_id": "CAM_STAFF_01",
+          "source_name": "CAM 4.mp4",
+          "role": "staff_backroom",
+          "covered_zones": ["STOCK_ROOM", "BACKLIT"]
+        },
+        {
+          "camera_id": "CAM_BILLING_01",
+          "source_name": "CAM 5.mp4",
+          "role": "billing",
+          "covered_zones": ["CASH_COUNTER", "PMU"]
+        }
+      ],
+      "zones": [
+        {"zone_id": "ENTRY", "label": "Entrance Threshold", "grid": [0, 0, 2, 8]},
+        {"zone_id": "EB_KOREAN", "label": "EB Korean", "grid": [2, 0, 1, 1]},
+        {"zone_id": "FACE_SHOP", "label": "The Face Shop", "grid": [3, 0, 1, 1]},
+        {"zone_id": "GOOD_VIBES", "label": "Good Vibes", "grid": [4, 0, 1, 1]},
+        {"zone_id": "DERMDOC", "label": "DermDoc", "grid": [5, 0, 1, 1]},
+        {"zone_id": "MINIMALIST", "label": "Minimalist", "grid": [6, 0, 1, 1]},
+        {"zone_id": "AQUALOGICA", "label": "Aqualogica", "grid": [7, 0, 1, 1]},
+        {"zone_id": "LAKME_SKIN", "label": "Lakme Skin", "grid": [8, 0, 1, 1]},
+        {"zone_id": "ACCESSORIES", "label": "Accessories", "grid": [9, 0, 1, 1]},
+        {"zone_id": "MAKEUP_UNIT", "label": "Makeup Unit", "grid": [5, 3, 2, 2]},
+        {"zone_id": "MAYBELLINE", "label": "Maybelline", "grid": [2, 7, 1, 1]},
+        {"zone_id": "FACES_CANADA", "label": "Faces Canada", "grid": [3, 7, 1, 1]},
+        {"zone_id": "LAKME", "label": "Lakme", "grid": [4, 7, 1, 1]},
+        {"zone_id": "COLORBAR_SUGAR", "label": "Colorbar + Sugar", "grid": [5, 7, 1, 1]},
+        {"zone_id": "SWISS_BEAUTY", "label": "Swiss Beauty", "grid": [6, 7, 1, 1]},
+        {"zone_id": "RENEE_NY_BAE", "label": "Renee NY Bae", "grid": [7, 7, 1, 1]},
+        {"zone_id": "ALPS_GOODNESS", "label": "Alps Goodness", "grid": [8, 7, 1, 1]},
+        {"zone_id": "STREAX", "label": "Streax", "grid": [9, 7, 1, 1]},
+        {"zone_id": "CASH_COUNTER", "label": "Cash Counter", "grid": [10, 2, 1, 3]},
+        {"zone_id": "PMU", "label": "PMU", "grid": [11, 4, 1, 2]},
+        {"zone_id": "BACKLIT", "label": "Backlit", "grid": [1, 7, 1, 1]},
+        {"zone_id": "STOCK_ROOM", "label": "Staff / Backroom", "grid": [0, 6, 2, 2]}
+      ]
+    }
+  }
+}
+

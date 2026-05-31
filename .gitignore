@@ -1,0 +1,11 @@
+.venv/
+clips/
+*.mp4
+*.mov
+*.zip
+data/store.db*
+__pycache__/
+.pytest_cache/
+.coverage
+htmlcov/
+

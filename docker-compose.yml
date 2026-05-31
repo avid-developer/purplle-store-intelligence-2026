@@ -1,0 +1,16 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      STORE_DATA_DIR: /app/data
+      STORE_DB_PATH: /app/data/store.db
+      STORE_POS_CSV: /app/data/pos_transactions.csv
+      STORE_LAYOUT_PATH: /app/data/store_layout.json
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=2).read()"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+

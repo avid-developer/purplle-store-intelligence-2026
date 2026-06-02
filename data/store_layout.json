@@ -2,7 +2,7 @@
   "stores": {
     "ST1008": {
       "display_name": "Brigade Bangalore",
-      "aliases": ["STORE_BLR_002", "Brigade_Bangalore"],
+      "aliases": ["STORE_BLR_002", "Brigade_Bangalore", "ST1076", "store_1076", "STORE_1076"],
       "timezone": "Asia/Kolkata",
       "open_hours": {
         "start": "10:00",
@@ -67,4 +67,3 @@
     }
   }
 }
-

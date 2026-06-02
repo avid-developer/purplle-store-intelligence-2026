@@ -53,8 +53,8 @@ def _normalise_raw_pos(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         dt = datetime.strptime(f"{first['order_date']} {first['order_time']}", "%d-%m-%Y %H:%M:%S")
         dt = dt.replace(tzinfo=timezone(timedelta(hours=5, minutes=30))).astimezone(timezone.utc)
         total = sum(float(item.get("total_amount") or item.get("basket_value_inr") or 0) for item in group)
-        department = _mode([item.get("dep_name") or item.get("department") or "unknown" for item in group])
-        sku_zone = _mode([item.get("sub_category") or item.get("sku_zone") or department for item in group])
+        department = _mode([item.get("dep_name") or item.get("department") or item.get("brand_name") or "unknown" for item in group])
+        sku_zone = _mode([item.get("sub_category") or item.get("sku_zone") or item.get("brand_name") or item.get("product_id") or department for item in group])
         transactions.append(
             {
                 "store_id": first.get("store_id") or "ST1008",
@@ -316,4 +316,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

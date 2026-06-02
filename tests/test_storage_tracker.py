@@ -34,6 +34,19 @@ class StorageTrackerTests(unittest.TestCase):
         self.assertEqual(rows[0]["transaction_id"], "T1")
         self.assertEqual(rows[0]["item_count"], 2)
 
+    def test_load_resource_center_pos_csv(self) -> None:
+        csv_path = Path(self.tmp.name) / "pos_resource.csv"
+        csv_path.write_text(
+            "order_id,order_date,order_time,store_id,product_id,brand_name,total_amount\n"
+            "1,10-04-2026,12:15:05,ST1008,399945,Faces Canada,302.33\n"
+        )
+        self.assertEqual(storage.load_pos_csv(csv_path), 1)
+        rows = storage.fetch_pos("ST1008")
+        self.assertEqual(rows[0]["transaction_id"], "1")
+        self.assertEqual(rows[0]["timestamp"], "2026-04-10T06:45:05Z")
+        self.assertEqual(rows[0]["basket_value_inr"], 302.33)
+        self.assertEqual(rows[0]["sku_zone"], "Faces Canada")
+
     def test_layout_alias_resolution(self) -> None:
         layout_path = Path(self.tmp.name) / "layout.json"
         layout_path.write_text(json.dumps({"stores": {"ST1008": {"aliases": ["STORE_BLR_002"], "zones": []}}}))
@@ -55,10 +68,12 @@ class StorageTrackerTests(unittest.TestCase):
 
     def test_camera_profile_and_sample_failure_path(self) -> None:
         self.assertEqual(tracker.camera_profile(Path("CAM 5.mp4"))["role"], "billing")
+        self.assertEqual(tracker.camera_profile(Path("billing_area.mp4"))["role"], "billing")
+        self.assertEqual(tracker.camera_profile(Path("entry 2.mp4"))["camera_id"], "CAM_ENTRY_02")
+        self.assertEqual(tracker.camera_profile(Path("zone.mp4"))["role"], "main_floor")
         self.assertEqual(tracker._parse_rate("25/1"), 25.0)
         self.assertEqual(tracker.sample_people_counts(Path("missing.mp4")), [])
 
 
 if __name__ == "__main__":
     unittest.main()
-

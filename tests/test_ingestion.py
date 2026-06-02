@@ -62,7 +62,51 @@ class IngestionTests(unittest.TestCase):
         self.assertIsNone(normalized)
         self.assertEqual(error.code, "missing_zone")
 
+    def test_resource_center_entry_event_is_adapted(self) -> None:
+        raw = {
+            "event_type": "entry",
+            "id_token": "ID_60001",
+            "store_code": "store_1076",
+            "camera_id": "cam1",
+            "event_timestamp": "2026-03-08T18:10:05.120000",
+            "is_staff": False,
+            "gender_pred": "F",
+            "age_pred": 28,
+        }
+        normalized, error = validate_event(raw)
+        self.assertIsNone(error)
+        self.assertEqual(normalized["event_type"], "ENTRY")
+        self.assertEqual(normalized["store_id"], "ST1076")
+        self.assertEqual(normalized["visitor_id"], "ID_60001")
+        self.assertEqual(normalized["timestamp"], "2026-03-08T18:10:05.120000Z")
+        self.assertEqual(normalized["metadata"]["source_schema"], "hackerearth_resource_center_sample")
+
+    def test_resource_center_queue_event_is_idempotent(self) -> None:
+        raw = {
+            "queue_event_id": "cfd8e3c5-7aa0-4ea3-9b59-692d50da8308",
+            "event_type": "queue_completed",
+            "track_id": 102,
+            "store_id": "ST1076",
+            "camera_id": "PURPLLE_MUM_1076_CAM6",
+            "zone_id": "PURPLLE_MUM_1076_Z_BILLING_01",
+            "queue_join_ts": "2026-03-08T18:13:05.080000",
+            "wait_seconds": 8,
+            "queue_position_at_join": 2,
+            "abandoned": False,
+        }
+        normalized, error = validate_event(raw)
+        self.assertIsNone(error)
+        self.assertEqual(normalized["event_id"], raw["queue_event_id"])
+        self.assertEqual(normalized["event_type"], "BILLING_QUEUE_JOIN")
+        self.assertEqual(normalized["visitor_id"], "TRACK_102")
+        self.assertEqual(normalized["dwell_ms"], 8000)
+        self.assertTrue(normalized["metadata"]["converted"])
+        accepted, duplicates = storage.insert_events([normalized])
+        self.assertEqual(accepted, 1)
+        accepted, duplicates = storage.insert_events([normalized])
+        self.assertEqual(accepted, 0)
+        self.assertEqual(duplicates, [raw["queue_event_id"]])
+
 
 if __name__ == "__main__":
     unittest.main()
-

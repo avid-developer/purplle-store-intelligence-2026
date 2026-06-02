@@ -2,7 +2,7 @@
 
 Containerised Store Intelligence API and event pipeline for the Purplle Tech Challenge 2026 Round 2.
 
-The supplied resources did not match the full problem-statement manifest. The actual ZIP contains five short CCTV clips named `CAM 1.mp4` through `CAM 5.mp4`; the POS data and layout were supplied separately as CSV/XLSX. This implementation treats `ST1008` as the canonical store and accepts `STORE_BLR_002` as an alias because that ID appears in the problem statement.
+The final Resource Center update supplies a compact problem statement, `POS - sample transactions.csv`, `sample_events.jsonl`, and two store archives. This implementation treats `ST1008` as the canonical demo store, accepts `STORE_BLR_002` for the acceptance-gate endpoint, and normalizes the sample-event store identifiers `ST1076` / `store_1076` so the Resource Center examples can be ingested directly.
 
 ## Run the API
 
@@ -16,19 +16,25 @@ The API is available at `http://localhost:8000`. The live dashboard is served at
 
 ## Generate and Ingest Events
 
-The repository does not include the challenge videos or raw POS export. Place the extracted videos in `clips/` or pass the extracted folder directly:
+The repository does not include the official challenge videos or resource files. Download them from the HackerEarth Resource Center, extract either `Store 1` or `Store 2`, and pass that folder directly:
 
 ```bash
 python3 -m venv .venv
 .venv/bin/pip install -r requirements-detection.txt
-.venv/bin/python -m pipeline.detect --clips-dir "/path/to/CCTV Footage" --pos data/pos_transactions.csv --output data/sample_events.jsonl
+.venv/bin/python -m pipeline.detect --clips-dir "/path/to/Store 1" --pos "/path/to/POS - sample transactions.csv" --output data/sample_events.jsonl
 .venv/bin/python scripts/ingest_jsonl.py data/sample_events.jsonl --api-url http://localhost:8000
+```
+
+The updated Resource Center `sample_events.jsonl` can also be ingested as-is. The API adapts its `entry`, `exit`, `zone_entered`, `zone_exited`, `queue_completed`, and `queue_abandoned` records into the internal schema while preserving the original fields in event metadata:
+
+```bash
+.venv/bin/python scripts/ingest_jsonl.py "/path/to/sample_events.jsonl" --api-url http://localhost:8000
 ```
 
 For a compressed live replay into the API:
 
 ```bash
-.venv/bin/python -m pipeline.detect --clips-dir "/path/to/CCTV Footage" --pos data/pos_transactions.csv --output data/sample_events.jsonl --api-url http://localhost:8000 --realtime
+.venv/bin/python -m pipeline.detect --clips-dir "/path/to/Store 2" --pos "/path/to/POS - sample transactions.csv" --output data/sample_events.jsonl --api-url http://localhost:8000 --realtime
 ```
 
 ## API Endpoints
@@ -50,9 +56,8 @@ Each test file starts with the required prompt and change block. The tests cover
 
 ## Data Handling
 
-The original POS CSV contains customer names and phone numbers, so it is intentionally not committed. `data/pos_transactions.csv` is a sanitized transaction-level extract containing only store ID, transaction ID, timestamp, basket value, department, SKU zone, and item count. The videos are excluded by `.gitignore` and `.dockerignore`.
+Official Resource Center files are intentionally not committed. `data/pos_transactions.csv` and `data/sample_events.jsonl` are generated demo fixtures used to make the API runnable without redistributing the challenge dataset. ZIPs, videos, SQLite databases, and cache output are excluded by `.gitignore` and `.dockerignore`.
 
 ## Architecture Notes
 
 The API uses Python's standard library HTTP server plus SQLite. That keeps `docker compose up` dependency-free and predictable for reviewer machines. The detection pipeline optionally uses OpenCV HOG sampling when `opencv-python-headless` is installed, but it can still emit schema-valid events from the provided POS timing, clip metadata, and camera role assumptions when model dependencies are unavailable.
-

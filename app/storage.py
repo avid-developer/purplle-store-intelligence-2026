@@ -5,7 +5,7 @@ import json
 import os
 import sqlite3
 from contextlib import contextmanager
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -89,7 +89,7 @@ def load_pos_csv(path: Path = POS_CSV_PATH) -> int:
     with path.open(newline="") as handle, connection() as conn:
         reader = csv.DictReader(handle)
         for row in reader:
-            timestamp = parse_timestamp(row["timestamp"]).isoformat().replace("+00:00", "Z")
+            normalized = _normalise_pos_row(row)
             conn.execute(
                 """
                 INSERT OR REPLACE INTO pos_transactions
@@ -97,18 +97,47 @@ def load_pos_csv(path: Path = POS_CSV_PATH) -> int:
                 VALUES (?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
-                    row["transaction_id"],
-                    row["store_id"],
-                    timestamp,
-                    float(row.get("basket_value_inr") or 0),
-                    row.get("department") or None,
-                    row.get("sku_zone") or None,
-                    int(float(row.get("item_count") or 0)),
+                    normalized["transaction_id"],
+                    normalized["store_id"],
+                    normalized["timestamp"],
+                    normalized["basket_value_inr"],
+                    normalized.get("department"),
+                    normalized.get("sku_zone"),
+                    normalized["item_count"],
                 ),
             )
             inserted += 1
         conn.commit()
     return inserted
+
+
+def _normalise_pos_row(row: dict[str, str]) -> dict[str, Any]:
+    if row.get("timestamp"):
+        timestamp = parse_timestamp(row["timestamp"]).isoformat().replace("+00:00", "Z")
+        return {
+            "transaction_id": row.get("transaction_id") or row.get("order_id") or row.get("invoice_number") or timestamp,
+            "store_id": row.get("store_id") or "ST1008",
+            "timestamp": timestamp,
+            "basket_value_inr": float(row.get("basket_value_inr") or row.get("total_amount") or 0),
+            "department": row.get("department") or row.get("dep_name") or row.get("brand_name") or None,
+            "sku_zone": row.get("sku_zone") or row.get("sub_category") or row.get("brand_name") or row.get("product_id") or None,
+            "item_count": int(float(row.get("item_count") or 1)),
+        }
+
+    if row.get("order_date") and row.get("order_time"):
+        local_dt = datetime.strptime(f"{row['order_date']} {row['order_time']}", "%d-%m-%Y %H:%M:%S")
+        timestamp = local_dt.replace(tzinfo=timezone(timedelta(hours=5, minutes=30))).astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+        return {
+            "transaction_id": row.get("transaction_id") or row.get("order_id") or row.get("invoice_number") or f"{row.get('store_id', 'STORE')}-{timestamp}",
+            "store_id": row.get("store_id") or "ST1008",
+            "timestamp": timestamp,
+            "basket_value_inr": float(row.get("basket_value_inr") or row.get("total_amount") or 0),
+            "department": row.get("department") or row.get("dep_name") or row.get("brand_name") or None,
+            "sku_zone": row.get("sku_zone") or row.get("sub_category") or row.get("brand_name") or row.get("product_id") or None,
+            "item_count": int(float(row.get("item_count") or 1)),
+        }
+
+    raise KeyError("POS row must include timestamp or order_date/order_time")
 
 
 def load_layout(path: Path = LAYOUT_PATH) -> dict[str, Any]:
@@ -207,4 +236,3 @@ def _row_to_event(row: sqlite3.Row) -> dict[str, Any]:
     event["is_staff"] = bool(event["is_staff"])
     event["metadata"] = json.loads(event["metadata"] or "{}")
     return event
-

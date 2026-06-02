@@ -14,6 +14,11 @@ CAMERA_ROLES = {
     "CAM 3": {"camera_id": "CAM_ENTRY_01", "role": "entry", "zones": ["ENTRY"]},
     "CAM 4": {"camera_id": "CAM_STAFF_01", "role": "staff_backroom", "zones": ["STOCK_ROOM"]},
     "CAM 5": {"camera_id": "CAM_BILLING_01", "role": "billing", "zones": ["CASH_COUNTER"]},
+    "ENTRY 1": {"camera_id": "CAM_ENTRY_01", "role": "entry", "zones": ["ENTRY"]},
+    "ENTRY 2": {"camera_id": "CAM_ENTRY_02", "role": "entry", "zones": ["ENTRY"]},
+    "BILLING_AREA": {"camera_id": "CAM_BILLING_01", "role": "billing", "zones": ["CASH_COUNTER"]},
+    "BILLING": {"camera_id": "CAM_BILLING_01", "role": "billing", "zones": ["CASH_COUNTER"]},
+    "ZONE": {"camera_id": "CAM_MAIN_01", "role": "main_floor", "zones": ["GOOD_VIBES", "DERMDOC", "MAKEUP_UNIT", "FACES_CANADA"]},
 }
 
 
@@ -123,4 +128,3 @@ def _parse_rate(value: str) -> float:
     numerator, denominator = value.split("/", 1)
     denominator_f = float(denominator or 1)
     return 0.0 if denominator_f == 0 else float(numerator) / denominator_f
-
